@@ -38,38 +38,37 @@ static int gettok() {
     if (IdentifierStr == "extern")
       return tok_extern;
     return tok_identifier;
-
-    if (isdigit(LastChar) || LastChar == '.') {
-      std::string NumStr;
-      do {
-        NumStr += LastChar;
-        LastChar = getchar();
-      } while (isdigit(LastChar) || LastChar == '.');
-
-      NumVal = strtod(NumStr.c_str(), 0);
-      return tok_number;
-    }
-
-    if (LastChar == "#") {
-      // comment until it reaches EOL.
-      do
-        LastChar = getchar();
-      while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
-
-      if (LastChar != EOF)
-        return gettok();
-    }
-    // "Do not eat the EOF.", a wise man said. i mean he is right i'm just
-    // here doing my own thing
-    if (LastChar == EOF) {
-      return tok_eof;
-
-      // otherwise, just return the ascii value of the character, aka the DAMN
-      // VALUE OF IT. HOW DO ROOKIE CODERS MESS THIS UP? I'M A ROOKIE CODER
-      // MYSELF. I UNDERSTAND THIS.
-      int ThisChar = LastChar;
+  }
+  if (isdigit(LastChar) || LastChar == '.') {
+    std::string NumStr;
+    do {
+      NumStr += LastChar;
       LastChar = getchar();
-      return ThisChar;
-    }
+    } while (isdigit(LastChar) || LastChar == '.');
+
+    NumVal = strtod(NumStr.c_str(), 0);
+    return tok_number;
+  }
+
+  if (LastChar == "#") {
+    // comment until it reaches EOL.
+    do
+      LastChar = getchar();
+    while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
+
+    if (LastChar != EOF)
+      return gettok();
+  }
+  // "Do not eat the EOF.", a wise man said. i mean he is right i'm just
+  // here doing my own thing
+  if (LastChar == EOF) {
+    return tok_eof;
+
+  // otherwise, just return the ascii value of the character, aka the DAMN
+  // VALUE OF IT. HOW DO ROOKIE CODERS MESS THIS UP? I'M A ROOKIE CODER
+  // MYSELF. I UNDERSTAND THIS.
+  int ThisChar = LastChar;
+  LastChar = getchar();
+  return ThisChar;
   }
 }
